@@ -1,39 +1,60 @@
 'use strict';
 
+// const variable
+const MAX_INTERBAL_COUNT = 100;
+const TARGET_ATTR_NAME = 'div[id^="hInySc"]';
+const DUMMY_ATTR_NAME = '.iSSROb'
+
+// global variable
 var href = undefined;
 
+// function
+function isTargetUrl()
+{
+  // 該当ページでない時
+  if (!document.URL.match(/eventedit/))
+  {
+    return false;
+  }
+  // 初回アクセスもしくはURLが変わっている場合
+  if (href !== location.href || href === undefined)
+  {
+    return true;
+  }
+  return false;
+}
+
+// main処理
+
 var observer = new MutationObserver(function(mutations) {
-  if((href !== location.href || href === undefined ) && document.URL.match(/eventedit/)) {
-    console.log('Before:', href);
-    console.log('After:', location.href);
-    href = location.href;
+  if(isTargetUrl()) {
     $(function() {
-      console.log(document.URL);
       var intervalCount = 0;
       var id = setInterval(function(){
-      ++intervalCount;
-      console.log('interval now');
-      var $scheduleDescDOM = $('div[id^="hInySc"]');
-      var $scheduleDummyDOM = $('.iSSROb');
-      if ($scheduleDescDOM[0] && $scheduleDummyDOM[0] || intervalCount > 100)
-      {
-        clearInterval(id);
-        var text = $scheduleDescDOM.text();
-        if (text)
+        ++intervalCount;
+        var $scheduleDescDOM = $(TARGET_ATTR_NAME);
+        var $scheduleDummyDOM = $(DUMMY_ATTR_NAME);
+        if ($scheduleDescDOM[0] && $scheduleDummyDOM[0] || intervalCount > MAX_INTERBAL_COUNT)
         {
-          console.log($scheduleDescDOM.text());
-          console.log('更新する必要なし');
+          clearInterval(id);
+          var text = $scheduleDescDOM.text();
+          if (text)
+          {
+            console.log($scheduleDescDOM.text());
+            console.log('更新する必要なし');
+          }
+          else
+          {
+            console.log('変更する必要ある');
+            // NOTE : 暫定対応
+            $scheduleDummyDOM.text('');
+            $scheduleDescDOM.text('changed text');
+          }
         }
-        else
-        {
-          console.log('変更する必要ある');
-          // NOTE : 暫定対応
-          $scheduleDummyDOM.text('');
-          $scheduleDescDOM.text('changed text');
-        }
-      }
-    },100);
-  });
+      },100);
+    });
   }
+  href = location.href;
 });
+
 observer.observe(document, { childList: true, subtree: true });
