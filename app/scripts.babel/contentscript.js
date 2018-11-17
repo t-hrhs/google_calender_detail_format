@@ -1,5 +1,10 @@
 'use strict';
 
+// const variable
+const MAX_INTERBAL_COUNT = 100;
+const TARGET_ATTR_NAME = 'div[id^="hInySc"]';
+const DUMMY_ATTR_NAME = '.iSSROb'
+
 // global variable
 var href = undefined;
 
@@ -19,17 +24,17 @@ function isTargetUrl()
   return false;
 }
 
+// main処理
+
 var observer = new MutationObserver(function(mutations) {
   if(isTargetUrl()) {
     $(function() {
-      console.log(document.URL);
       var intervalCount = 0;
       var id = setInterval(function(){
         ++intervalCount;
-        console.log('interval now');
-        var $scheduleDescDOM = $('div[id^="hInySc"]');
-        var $scheduleDummyDOM = $('.iSSROb');
-        if ($scheduleDescDOM[0] && $scheduleDummyDOM[0] || intervalCount > 100)
+        var $scheduleDescDOM = $(TARGET_ATTR_NAME);
+        var $scheduleDummyDOM = $(DUMMY_ATTR_NAME);
+        if ($scheduleDescDOM[0] && $scheduleDummyDOM[0] || intervalCount > MAX_INTERBAL_COUNT)
         {
           clearInterval(id);
           var text = $scheduleDescDOM.text();
@@ -52,5 +57,4 @@ var observer = new MutationObserver(function(mutations) {
   href = location.href;
 });
 
-// main処理
 observer.observe(document, { childList: true, subtree: true });
