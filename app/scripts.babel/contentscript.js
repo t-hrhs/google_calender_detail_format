@@ -47,11 +47,21 @@ var observer = new MutationObserver(function(mutations) {
           {
             console.log('変更する必要ある');
             chrome.storage.local.get('google_calender_detail_format', function (value) {
-              console.log(value);
+              console.log(value.google_calender_detail_format);
               if (value.google_calender_detail_format)
               {
                 $scheduleDummyDOM.text('');
-                $scheduleDescDOM.text(value.google_calender_detail_format);
+                var arr = value.google_calender_detail_format.split(/\r\n|\r|\n/);
+                for (var i = 0; i < arr.length; i++) {
+                  if (i === 0)
+                  {
+                    $scheduleDescDOM.text(arr[0]);
+                  }
+                  else
+                  {
+                    $scheduleDescDOM.append('<div>' + arr[i] + '</div>')
+                  }
+                }
               }
             });
           }
