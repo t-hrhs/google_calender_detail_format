@@ -46,9 +46,14 @@ var observer = new MutationObserver(function(mutations) {
           else
           {
             console.log('変更する必要ある');
-            // NOTE : 暫定対応
-            $scheduleDummyDOM.text('');
-            $scheduleDescDOM.text('changed text');
+            chrome.storage.local.get('google_calender_detail_format', function (value) {
+              console.log(value);
+              if (value.google_calender_detail_format)
+              {
+                $scheduleDummyDOM.text('');
+                $scheduleDescDOM.text(value.google_calender_detail_format);
+              }
+            });
           }
         }
       },100);
