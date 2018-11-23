@@ -124,7 +124,7 @@ gulp.task('wiredep', () => {
 gulp.task('package', function () {
   var manifest = require('./dist/manifest.json');
   return gulp.src('dist/**')
-      .pipe($.zip('chrome_extention_test-' + manifest.version + '.zip'))
+      .pipe($.zip('google_calender_detail_format-' + manifest.version + '.zip'))
       .pipe(gulp.dest('package'));
 });
 
