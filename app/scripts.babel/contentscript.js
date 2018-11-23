@@ -46,9 +46,24 @@ var observer = new MutationObserver(function(mutations) {
           else
           {
             console.log('変更する必要ある');
-            // NOTE : 暫定対応
-            $scheduleDummyDOM.text('');
-            $scheduleDescDOM.text('changed text');
+            chrome.storage.local.get('google_calender_detail_format', function (value) {
+              console.log(value.google_calender_detail_format);
+              if (value.google_calender_detail_format)
+              {
+                $scheduleDummyDOM.text('');
+                var arr = value.google_calender_detail_format.split(/\r\n|\r|\n/);
+                for (var i = 0; i < arr.length; i++) {
+                  if (i === 0)
+                  {
+                    $scheduleDescDOM.text(arr[0]);
+                  }
+                  else
+                  {
+                    $scheduleDescDOM.append('<div>' + arr[i] + '</div>')
+                  }
+                }
+              }
+            });
           }
         }
       },100);
