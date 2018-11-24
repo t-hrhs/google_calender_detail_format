@@ -1,12 +1,13 @@
 $(function(){
-
-  // セーブボタンが押されたら、
-  // ローカルストレージに保存する。
   var message = '';
   $("#save").click(function () {
     var tmpMessage = $('#message').val();
     chrome.storage.local.set({'google_calender_detail_format': tmpMessage}, function () {
       console.log(tmpMessage);
+      $("#success-area").show();
+      setTimeout(function(){
+        $('#success-area').hide();
+      },1000);
       message = tmpMessage;
     });
   });
