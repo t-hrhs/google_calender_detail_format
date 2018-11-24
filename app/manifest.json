@@ -15,9 +15,7 @@
     ]
   },
   "permissions": [
-    "tabs",
-    "http://*/*",
-    "https://*/*",
+    "https://calendar.google.com/calendar/r*",
     "storage"
   ],
   "content_scripts": [
