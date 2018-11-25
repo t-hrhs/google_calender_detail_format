@@ -7,7 +7,7 @@ https://chrome.google.com/webstore/detail/google-calendar-descripti/pbeidkeimcle
 node (動作確認している環境はv7.0.0)
 
 # Setup
-npm install -g yo bower gulp
+npm install -g yo bower gulp<br>
 npm install
 
 # Usage
